@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>"Calculator"</title>
+    <style>
+      input {
+        width: 500px;
+        height: 50px;
+        border: none;
+        border-bottom: 1px solid black;
+      }
+      .maybeCenter {
+        margin-left: 30%;
+        margin-top: 10%;
+      }
+      .solveButton {
+        width: 50px;
+        height: 50px;
+        border: none;
+        border-radius: 60px;
+        background-color: cadetblue;
+        color: white;
+      }
+    </style>
+    <script>
+      var input1, input2, operation, result;
+      function makeDumbJokes() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            var random_number = Math.floor(Math.random() * response.length);
+            var specific_response = response[random_number];
+            document.getElementById("input1").value = specific_response.line;
+            document.getElementById("input2").value = specific_response.emoji;
+            document.getElementById(
+              "operation"
+            ).value = `BTW your solution for ${input1} ${operation} ${input2} is`;
+          }
+        };
+        xhttp.open("GET", "https://nikepick.github.io/jokesAttempt/jokes.json");
+        xhttp.send();
+      }
+      function calculate() {
+        input1 = document.getElementById("input1").value;
+        input2 = document.getElementById("input2").value;
+        input1 = parseInt(input1);
+        input2 = parseInt(input2);
+        operation = document.getElementById("operation").value;
+        if (input1 !== "" && input2 !== "" && operation !== "") {
+          if (operation === "+") {
+            result = input1 + input2;
+          } else if (operation === "-") {
+            result = input1 - input2;
+          } else if (operation === "x") {
+            result = input1 * input2;
+          } else if (operation === "/") {
+            result = input1 / input2;
+          } else {
+            result = "WTF did you wrote in the operation box?";
+          }
+          makeDumbJokes();
+          document.getElementById("result").value = result;
+        } else {
+            alert('friggin put some effor to fill all the input fields')
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="maybeCenter">
+      <input type="text" id="input1" placeholder="enter first number" />
+      <br />
+      <br />
+      <input
+        type="text"
+        id="operation"
+        placeholder="enter the operator (+,-,x,/)"
+      />
+      <br />
+      <br />
+      <input type="text" id="input2" placeholder="enter second number" />
+      <br />
+      <br />
+      <input type="text" id="result" placeholder="wait for it" disabled/>
+      <br />
+      <br />
+      <button onclick="calculate()" class="solveButton">=</button>
+    </div>
+  </body>
+</html>
